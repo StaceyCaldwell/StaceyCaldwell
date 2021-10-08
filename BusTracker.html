@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Bus Tracker</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" rel="stylesheet" />
+<style>
+  body { margin: 0; padding: 0; }
+  #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+
+.map-overlay {
+  position: absolute;
+  left: 0;
+  padding: 10px;
+}
+ 
+</style>
+</head>
+<body>
+<div id="map"></div>
+
+<div class="map-overlay top">
+  <button style="font-size: 2em" onclick="move()">
+    Show stops between Cornell and Commons
+  </button>
+</div>
+ 
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1Ijoic3RjYWxkd2VsbCIsImEiOiJja3VoM2pobDIwczhpMm90NGNmMWw2dWc1In0.cASyTQNCoUBOoKaSVjg9jA';
+
+  var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [-76.501884, 42.443962],
+      zoom: 13
+  });
+ 
+var marker = new mapboxgl.Marker()
+    .setLngLat([-76.488704, 42.449303])
+    .addTo(map);
+
+const busStops = [
+    [-76.488704, 42.449303],
+    [-76.483775, 42.451408],
+    [-76.482880, 42.449854],
+    [-76.482655, 42.445314],
+    [-76.489895, 42.442513],
+    [-76.489797, 42.440712],
+    [-76.490422, 42.439298],
+    [-76.496500, 42.440469],
+    [-76.496957, 42.442574],
+    [-76.494561, 42.443103],
+    [-76.493090, 42.447136],
+    [-76.492093, 42.449597],
+];
+
+let counter = 0;
+function move(){
+  setTimeout(()=>{
+    if (counter >= busStops.length) return;
+    marker.setLngLat(busStops[counter]);
+    counter++;
+    move();
+  },1000); 
+}
+
+</script>
+ 
+</body>
+</html>
